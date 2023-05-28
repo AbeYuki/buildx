@@ -18,7 +18,7 @@ patchesStrategicMerge:
     template:
       spec:
         containers:
-        - name: kaniko
+        - name: buildx
           image: gcr.io/kaniko-project/executor:latest
           command: ["docker"]
           args: 
