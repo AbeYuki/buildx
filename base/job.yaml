@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-      - name: build-container
+      - name: buildx
         image: docker
         command: ["docker"]
         args: 
