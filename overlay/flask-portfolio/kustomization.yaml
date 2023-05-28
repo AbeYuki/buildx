@@ -19,7 +19,7 @@ patchesStrategicMerge:
       spec:
         containers:
         - name: buildx
-          image: gcr.io/kaniko-project/executor:latest
+          image: docker
           command: ["docker"]
           args: 
             - "run --platform linux/amd64,linux/arm64"
