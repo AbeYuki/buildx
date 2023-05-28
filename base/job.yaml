@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: buildx
+  namespace: kaniko
+spec:
+  template:
+    spec:
+      containers:
+      - name: build-container
+        image: docker
+        command: ["docker"]
+        args: 
+          - "run --platform linux/amd64,linux/arm64"
+          - "gcr.io/kaniko-project/executor:latest"
+          - "--git=branch=build"
+          - "--context=git://github.com/AbeYuki/flask-portfolio/"
+          - "--destination=registry.gitlab.com/aimhighergg/docker-registry/flask-portfolio:1.0"
+        volumeMounts:
+          - name: docker-socket
+            mountPath: /var/run/docker.sock
+          - name: kaniko-secret
+            mountPath: /root/.docker
+        env:
+        - name: GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: git-credential
+              key: git-username
+        - name: GIT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: git-credential
+              key: git-password
+      restartPolicy: Never
+      volumes:
+      - name: kaniko-secret
+        secret:
+          secretName: docker-registry
+          items:
+            - key: .dockerconfigjson
+              path: config.json
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock
+  backoffLimit: 1
