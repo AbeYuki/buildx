@@ -11,9 +11,9 @@ spec:
         image: docker
         command: ["docker"]
         args: 
-          - "run --platform linux/amd64,linux/arm64"
+          - "run"
+          - "--platform=linux/amd64,linux/arm64"
           - "gcr.io/kaniko-project/executor:latest"
-          - "--git=branch=build"
           - "--context=git://github.com/AbeYuki/flask-portfolio/"
           - "--destination=registry.gitlab.com/aimhighergg/docker-registry/flask-portfolio:1.0"
         volumeMounts:
