@@ -12,11 +12,13 @@ spec:
         command: ["docker"]
         args: 
           - "run"
-          - "--platform=linux/amd64,linux/arm64"
+          - "--rm"
+          - "--volume=/:/workspace"
+          - "--workdir=/workspace"
           - "gcr.io/kaniko-project/executor:latest"
-          - "--git=branch=build"
           - "--context=git://github.com/AbeYuki/flask-portfolio/"
           - "--destination=registry.gitlab.com/aimhighergg/docker-registry/flask-portfolio:1.0"
+          - "--git=branch=build"
         volumeMounts:
           - name: docker-socket
             mountPath: /var/run/docker.sock
