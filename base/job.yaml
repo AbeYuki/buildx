@@ -12,6 +12,7 @@ spec:
         command: ["docker"]
         args: 
           - "run"
+          - "-itd"
           - "--rm"
           - "--volume=/:/workspace"
           - "--workdir=/workspace"
